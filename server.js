@@ -1,6 +1,7 @@
 const http = require('http');
 const { v4: uuidv4 } = require('uuid');
 const errHandle = require('./errorHandle');
+const getTodo = require('./getTodo');
 const todos = [];
 
 const requestListener = (req, res)=>{
@@ -17,7 +18,7 @@ const requestListener = (req, res)=>{
     })
     
     if(req.url=="/todos" && req.method == "GET"){
-        // getTodo.js
+      getTodo(todos, res, headers);
     }else if(req.url=="/todos" && req.method == "POST"){
         // postTodo.js
     }else if(req.url=="/todos" && req.method == "DELETE"){
