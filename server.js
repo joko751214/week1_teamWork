@@ -29,7 +29,7 @@ const requestListener = (req, res)=>{
     }else if(req.url.startsWith("/todos/") && req.method=="PATCH"){
         // patchTodo.js
         req.on('end', ()=>{
-            patchTodo(req,res,headers,body,todos);
+            patchTodo(req,res,body,todos);
         });
     }else if(req.method == "OPTIONS"){
         res.writeHead(200,headers);
