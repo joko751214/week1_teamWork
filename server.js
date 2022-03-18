@@ -22,7 +22,7 @@ const requestListener = (req, res)=>{
         getTodo(todos, res, headers);
     }else if(req.url=="/todos" && req.method == "POST"){
         req.on('end', ()=>{
-            postTodo(req,res,body,todos, headers)
+            postTodo(req,res,body,todos)
         })
         // postTodo.js
     }else if(req.url=="/todos" && req.method == "DELETE"){
