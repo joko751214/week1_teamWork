@@ -6,9 +6,6 @@ const patchTodo = (req, res, headers, body, todos) => {
   const index = todos.findIndex(item=> item.id === id);
   try{
       const { title } = JSON.parse(body);
-      const id = req.url.split('/').pop();
-      const index = todos.findIndex(item=> item.id === id);
-
       if( title !== undefined && index !== -1) {
         todos[index].title = title;
         successHandle(res, headers, todos);
