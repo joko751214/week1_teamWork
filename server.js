@@ -2,6 +2,7 @@ const http = require('http');
 const { v4: uuidv4 } = require('uuid');
 const errHandle = require('./errorHandle');
 const getTodo = require('./getTodo');
+const patchTodo = require('./patchTodo');
 const todos = [];
 
 const requestListener = (req, res)=>{
@@ -27,6 +28,9 @@ const requestListener = (req, res)=>{
         // deleteTodo.js
     }else if(req.url.startsWith("/todos/") && req.method=="PATCH"){
         // patchTodo.js
+        req.on('end', ()=>{
+            patchTodo(req,res,headers,body,todos);
+        });
     }else if(req.method == "OPTIONS"){
         res.writeHead(200,headers);
         res.end();
