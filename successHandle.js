@@ -1,5 +1,7 @@
-function successHandle(res, headers, todos) {
-  res.writeHead(200, headers);
+const { HEADERS } = require('./utils/constant');
+
+function successHandle(res, todos) {
+  res.writeHead(200, HEADERS);
   res.write(
     JSON.stringify({
       status: "success",
