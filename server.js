@@ -1,5 +1,5 @@
 const http = require('http');
-const errHandle = require('./errorHandle');
+const errorHandle = require('./errorHandle');
 const getTodo = require('./getTodo');
 const postTodo = require('./postTodo');
 const patchTodo = require('./patchTodo');
@@ -38,12 +38,7 @@ const requestListener = (req, res)=>{
         res.writeHead(200,headers);
         res.end();
     }else{
-        res.writeHead(404,headers);
-        res.write(JSON.stringify({
-            "status": "false",
-            "message": "無此網站路由"
-        }));
-        res.end();
+        errorHandle(res, '無此網站路由', 404)
     }
 }
 
