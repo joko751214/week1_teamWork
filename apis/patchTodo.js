@@ -1,5 +1,4 @@
-const successHandle = require('../handler/successHandle')
-const errorHandle = require('../handler/errorHandle')
+const {successHandle, errorHandle} = require('../handler/index')
 
 const patchTodo = (req, res, body, todos) => {
   const id = req.url.split('/').pop()

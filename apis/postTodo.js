@@ -1,6 +1,5 @@
-const successHandle = require('../handler/successHandle')
-const errorHandle = require('../handler/errorHandle')
 const {v4: uuidv4} = require('uuid')
+const {successHandle, errorHandle} = require('../handler/index')
 
 const postTodo = (req, res, body, todos) => {
   try {
