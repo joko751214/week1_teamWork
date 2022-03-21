@@ -1,25 +1,26 @@
-const successHandle = require('../handler/successHandle')
-const errorHandle = require('../handler/errorHandle')
+const {successHandle, errorHandle} = require('../handler/index')
 
-const deletTodo = (req, res, todos) => {
+const deleteTodo = (req, res, todos) => {
   const splitUrl = req.url.split('/').filter(e => e)
-  const isDeleteAll = splitUrl.length === 1
 
-  if (isDeleteAll) {
-    // delete all
-    todos.length = 0
-    successHandle(res, todos)
-  } else {
-    // delete specific id
-    const index = todos.findIndex(e => e.id === splitUrl[1])
-
-    if (index !== -1) {
-      todos.splice(index, 1)
+  switch (splitUrl.length) {
+    case 1:
+      todos.length = 0
       successHandle(res, todos)
-    } else {
+      break
+    case 2: // delete specific id
+      const index = todos.findIndex(e => e.id === splitUrl[1])
+      if (index !== -1) {
+        todos.splice(index, 1)
+        successHandle(res, todos)
+      } else {
+        errorHandle(res, '此id不存在')
+      }
+      break
+    default:
       errorHandle(res, '此id不存在')
-    }
+      break
   }
 }
 
-module.exports = deletTodo
+module.exports = deleteTodo
