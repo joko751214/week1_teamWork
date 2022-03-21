@@ -1,7 +1,6 @@
 const {v4: uuidv4} = require('uuid')
 const {HEADERS} = require('../utils/constant')
-const {successHandle} = require('../handler/index')
-const {postTodo, deleteTodo, patchTodo} = require('../apis/index')
+const {getTodo, postTodo, deleteTodo, patchTodo} = require('../apis/index')
 const routeWrapper = require('./common/routeWrapper')
 
 const routePath = 'todos'
@@ -21,7 +20,7 @@ const todosRoute = (req, res) => {
   const METHOD = req.method
   switch (METHOD) {
     case 'GET':
-      successHandle(res, todos)
+      getTodo(res, todos)
       break
     case 'POST':
       req.on('end', () => {
