@@ -1,15 +1,17 @@
-const {v4: uuidv4} = require('uuid')
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config({path: './config.env'})
+
 const {HEADERS} = require('../utils/constant')
 const {getTodo, postTodo, deleteTodo, patchTodo} = require('../apis/index')
 const routeWrapper = require('./common/routeWrapper')
 
+const DB = process.env.DATABASE.replace('<password>', process.env.DATABASE_PASSWORD);
+mongoose.connect(DB)
+  .then(() => console.log('Connection Successful!'))
+  .catch(() => console.log('Connection Failed!'));
+
 const routePath = 'todos'
-const todos = [
-  {
-    title: '刷牙唷!',
-    id: uuidv4(),
-  },
-]
 
 const todosRoute = (req, res) => {
   let body = ''
