@@ -5,12 +5,6 @@ const {getTodo, postTodo, deleteTodo, patchTodo} = require('../apis/index')
 const routeWrapper = require('./common/routeWrapper')
 
 const routePath = 'todos'
-// const todos = [
-//   {
-//     title: '刷牙唷!',
-//     id: uuidv4(),
-//   },
-// ]
 
 // DB 連線
 mongoose.connect('mongodb://localhost:27017/test')
