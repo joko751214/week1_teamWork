@@ -33,7 +33,7 @@ const todosRoute = (req, res) => {
       break
     case 'POST':
       req.on('end', () => {
-        postTodo(req, res, body, todos)
+        postTodo(req, res, body)
       })
       break
     case 'DELETE':
