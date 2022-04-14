@@ -1,15 +1,14 @@
-const {v4: uuidv4} = require('uuid')
 const {successHandle, errorHandle} = require('../handler/index')
+const Todo = require('../models/todo');
 
-const postTodo = (req, res, body, todos) => {
+const postTodo = async (req, res, body) => {
   try {
-    const title = JSON.parse(body).title
+    const { title } = JSON.parse(body)
     if (title !== undefined) {
-      const todo = {
-        title: title,
-        id: uuidv4(),
-      }
-      todos.push(todo)
+      // 新增
+      await Todo.create({title});
+      // 取得所有
+      const todos = await Todo.find();
       successHandle(res, todos)
     } else {
       errorHandle(res, 'title 未正確填寫')
