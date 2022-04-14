@@ -1,15 +1,24 @@
 const {v4: uuidv4} = require('uuid')
+const mongoose = require('mongoose');
 const {HEADERS} = require('../utils/constant')
 const {getTodo, postTodo, deleteTodo, patchTodo} = require('../apis/index')
 const routeWrapper = require('./common/routeWrapper')
 
 const routePath = 'todos'
-const todos = [
-  {
-    title: '刷牙唷!',
-    id: uuidv4(),
-  },
-]
+// const todos = [
+//   {
+//     title: '刷牙唷!',
+//     id: uuidv4(),
+//   },
+// ]
+
+// DB 連線
+mongoose.connect('mongodb://localhost:27017/test')
+  .then(()=>{
+    console.log('DB連線成功');
+  }).catch((err)=>{
+    console.log(err.reason);
+  })
 
 const todosRoute = (req, res) => {
   let body = ''
@@ -20,7 +29,7 @@ const todosRoute = (req, res) => {
   const METHOD = req.method
   switch (METHOD) {
     case 'GET':
-      getTodo(res, todos)
+      getTodo(res)
       break
     case 'POST':
       req.on('end', () => {
