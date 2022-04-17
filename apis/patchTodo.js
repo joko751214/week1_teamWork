@@ -1,20 +1,41 @@
 const {successHandle, errorHandle} = require('../handler/index')
+const errorMsgHandler = require('../../utils/errorMsgHandler')
+const Todo = require('../models/todo')
 
 const patchTodo = (req, res, body, todos) => {
-  const id = req.url.split('/').pop()
-  const index = todos.findIndex(item => item.id === id)
+  const splitUrl = req.url.split('/').splice(2)
+  const ID = splitUrl[0]
+  const isRouteError = splitUrl.length > 1
+
   try {
-    const {title} = JSON.parse(body)
-    if (title !== undefined && index !== -1) {
-      todos[index].title = title
-      successHandle(res, todos)
-    } else if (title === undefined) {
-      errorHandle(res, 'title 未正確填寫')
-    } else if (index === -1) {
-      errorHandle(res, '查無id')
+    if (isRouteError) {
+      // catch '/rooms/as123as4/XXXX' or ''/rooms//XXXX''
+      errorHandle(res, {data: `PATCH 無此路由`}, 404)
     }
-  } catch (err) {
-    errorHandle(res, 'JSON 格式錯誤')
+
+    if (ID) {
+      const data = await JSON.parse(body)
+      const todos = await Todo.findByIdAndUpdate(
+        ID,
+        {...data},
+        {
+          returnDocument: 'after',
+        }
+      )
+      if (rooms) {
+        successHandle(res, {data: todos})
+      }
+
+      // ID.length === 24 & not exsit in DB
+      errorHandle(res, {data: `ID: '${ID}' 不存在`})
+    }
+  } catch (error) {
+    if (error?.errors) {
+      // catch update error
+      errorHandle(res, {data: errorMsgHandler(error)})
+    }
+    // other error (// ID.length !== 24)
+    errorHandle(res, {data: `ID: '${ID}' 不存在`})
   }
 }
 module.exports = patchTodo
